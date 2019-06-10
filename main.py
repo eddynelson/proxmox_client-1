@@ -33,3 +33,84 @@ class ProxmoxClient():
         self._token = data['CSRFPreventionToken']
 
         self._cookies = { 'PVEAuthCookie': self._ticket }
+
+    #Cluster
+    def get_cluster_tasks(self):
+        res = requests.get(
+          self.api_url + '/cluster/tasks',
+          verify = False,
+          cookies = self._cookies
+        )
+
+        res.raise_for_status()
+
+        return res.json()['data']
+
+    def get_cluster_status(self):
+        res = requests.get(
+          self.api_url + '/cluster/status',
+          verify = False,
+          cookies = self._cookies
+        )
+
+        res.raise_for_status()
+
+        return res.json()['data']
+
+    def get_cluster_resources(self):
+        res = requests.get(
+          self.api_url + '/cluster/resources',
+          verify = False,
+          cookies=self._cookies
+        )
+
+        res.raise_for_status()
+
+        return res.json()['data']
+    
+    def get_cluster_nextid(self):
+        res = requests.get(
+          self.api_url + '/cluster/nextid',
+          verify = False,
+          cookies = self._cookies
+        )
+
+        res.raise_for_status()
+
+        return int(res.json()['data'])
+
+    def get_cluster_logs(self):
+        res = requests.get(
+          self.api_url + '/cluster/log',
+          verify = False,
+          cookies = self._cookies
+        )
+
+        res.raise_for_status()
+
+        return res.json()['data']
+
+    def get_cluster_replications(self):
+        res = requests.get(
+          self.api_url + '/cluster/replication',
+          verify = False,
+          cookies = self._cookies
+        )
+
+        res.raise_for_status()
+
+        return res.json()['data']
+
+    def update_cluster_options(self, data):
+        res = requests.put(
+          self.api_url + '/cluster/options',
+          verify = False,
+          cookies = self._cookies,
+          data = data,
+          headers = { 'CSRFPreventionToken': self._token }
+        )
+
+        res.raise_for_status()
+
+        if res.status_code == 200:
+            return { "message": 'Success!!' }

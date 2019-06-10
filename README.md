@@ -36,3 +36,28 @@ pxpx = ProxmoxClient(config)
 ## How use in CLI
 
 # TODO
+
+
+### Cluster methods
+
+Cluster Management in proxmox-client
+
+check <https://pve.proxmox.com/pve-docs/api-viewer/>
+
+``` python
+
+pxpx.get_cluster_tasks() # return list of tasks
+
+pxpx.get_cluster_status() # return list of status
+
+pxpx.get_cluster_resources() # return list of resources
+
+pxpx.get_cluster_nextid() # return intenger
+
+pxpx.get_cluster_logs() # return list of logs
+
+pxpx.get_cluster_replications() # return list of replications
+
+pxpx.update_cluster_options() # update cluster options
+
+```

@@ -22,19 +22,17 @@ $ mv (your-clone-dir)/proxmox_client/main.py (your-project-dir)/proxmoxclient
 from proxmoxclient.main import ProxmoxClient
 
 config = {
-  "base_url": "your_host", 
-  "verify_ssl": False, 
-  "password": "your_password", 
+  "base_url": "your_host",
+  "verify_ssl": False,
+  "password": "your_password",
   "username": "your_username"
 }
 
 pxpx = ProxmoxClient(config)
-
-logs = pxpx.get_cluster_logs()
-print(logs)
 
 # start use your method
 ```
 
 ## How use in CLI
 
+# TODO

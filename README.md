@@ -97,4 +97,14 @@ pxpx.update_snapshot(data={...}) # update snapshot on a specifit ct
 pxpx.delete_snapshot(data={...}) # delete snapshot on a specifit ct
 
 pxpx.delete_ct(data={...}) # delete specific ct
+
+pxpx.resize_ct(data={...}) # TODO
+
+pxpx.resume_ct(data={...}) # TODO: without test
+
+pxpx.shutdown_ct(data={...}) # TODO: without test
+
+pxpx.suspend_ct(data={...}) # TODO: without test
+
+pxpx.create_ct(data={...}) # TODO: without test
 ```

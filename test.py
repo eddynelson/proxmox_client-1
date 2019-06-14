@@ -3,11 +3,18 @@ import unittest
 from main import ProxmoxClient
 
 CONFIG = {
-  "base_url": "142.44.137.41",
+  "base_url": "142.44.137.49",
   "verify_ssl": False,
   "password": "010203",
   "username": "root@pam"
 }
+
+# Requirement for run this file:
+# 1. Vm or container for clonning and set vmid in setUp method
+# 2. Vm or container for template and set vmid in setUp method
+# 3. Vm or container for remove and set vmid in setUp method
+# 4. Vm or container for other and set vmid in setUp method
+# 5. Change node name in setUp method
 
 
 class ProxmoxClientTest(unittest.TestCase):
@@ -16,6 +23,14 @@ class ProxmoxClientTest(unittest.TestCase):
         self.type_list = type([])
         self.type_dict = type({})
         self.success_result = { "message": 'Success!!' }
+        self.node = "ursa"
+
+        #nodes
+        self.vm_for_clonning = 100
+        self.vm_for_template = 101
+        self.vm_for_remove = 102
+        self.vm_for_other = 103
+        self.nextid = self.client.get_nextid()
 
     def test_get_ticket(self):
         try:
@@ -51,6 +66,75 @@ class ProxmoxClientTest(unittest.TestCase):
 
     def test_update_cluster_options(self):
         result = self.client.update_cluster_options(data={ 'language': 'en' })
+        self.assertEqual(result, self.success_result)
+
+    # Containers
+    def test_get_all_ct(self):
+        result = self.client.get_all_ct(data={ "node": self.node })
+        self.assertTrue(type(result) is self.type_list)
+
+    def test_get_nextid(self):
+        result = self.client.get_nextid()
+        self.assertTrue(type(result) is int)
+
+    def test_get_config_ct(self):
+        result = self.client.get_config_ct(data={ "node": self.node, "vmid": self.vm_for_other })
+        self.assertTrue(type(result) is self.type_dict)
+
+    def test_create_snapshot(self):
+        result = self.client.create_snapshot(data={ "node": self.node, 'vmid': self.vm_for_other, "snapname": 'any' })
+        self.assertEqual(result, self.success_result)
+
+    def test_start_ct(self):
+        result = self.client.start_ct(data={ "node": self.node, 'vmid': self.vm_for_other })
+        self.assertEqual(result, self.success_result)
+
+    def test_stop_ct(self):
+        result = self.client.stop_ct(data={ "node": self.node, 'vmid': self.vm_for_other })
+        self.assertEqual(result, self.success_result)
+
+    def test_get_snapshots(self):
+        result = self.client.get_snapshots(data={ "node": self.node, "vmid": self.vm_for_other })
+        self.assertTrue(type(result) is self.type_list)
+
+    def test_get_snapshot(self):
+        result = self.client.get_snapshot(data={ "node": self.node, "vmid": self.vm_for_other, "snapname": "any" })
+        self.assertTrue(type(result) is self.type_dict)
+
+    def test_clone_ct(self):
+        result = self.client.clone_ct(data={ "node": self.node, 'vmid':self.vm_for_clonning})
+        self.assertEqual(result, self.success_result)
+    
+    def test_create_template(self):
+        result = self.client.create_template(data={ "node": self.node, 'vmid': self.vm_for_template })
+        self.assertEqual(result, self.success_result)
+
+    def test_update_config_ct(self):
+        result = self.client.update_config_ct(data={ "node": self.node, 'vmid': self.vm_for_other, "cores": 2 })
+        self.assertEqual(result, self.success_result)
+
+    def test_update_snapshot(self):
+        result = self.client.update_snapshot(data={
+            "node": self.node, 
+            'vmid': self.vm_for_other, 
+            "snapname": "any", 
+            "description": "other" 
+        })
+        self.assertEqual(result, self.success_result)
+
+    def test_delete_snapshot(self):
+        result = self.client.delete_snapshot(data={
+            "node": self.node, 
+            "vmid": self.vm_for_other, 
+            "snapname": "any"
+        })
+        self.assertEqual(result, self.success_result)
+
+    def test_delete_ct(self):
+        result = self.client.delete_ct(data={
+            "node": self.node,
+            "vmid": self.vm_for_remove
+        })
         self.assertEqual(result, self.success_result)
 
 if __name__ == '__main__':

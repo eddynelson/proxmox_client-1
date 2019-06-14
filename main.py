@@ -191,7 +191,7 @@ class ProxmoxClient():
 
         return res.json()['data']
 
-    # Not test
+    # without test
     def create_ct(self, data):
         route = '/nodes/%s/lxc' % (data['node'])
 
@@ -235,7 +235,7 @@ class ProxmoxClient():
 
         return MSG
 
-    # Not test
+    # without test
     def suspend_ct(self, data):
         route = '/nodes/%s/lxc/%s/status/suspend' % (data['node'], data['vmid'])
 
@@ -250,7 +250,7 @@ class ProxmoxClient():
 
         return MSG
 
-    # Not test
+    # without test
     def shutdown_ct(self, data):
         route = '/nodes/%s/lxc/%s/status/shutdown' % (data['node'], data['vmid'])
 
@@ -265,7 +265,7 @@ class ProxmoxClient():
 
         return MSG
     
-    # Not test
+    # Without test
     def resume_ct(self, data):
         route = '/nodes/%s/lxc/%s/status/resume' % (data['node'], data['vmid'])
 
@@ -280,7 +280,6 @@ class ProxmoxClient():
 
         return MSG
 
-    # Not test
     def clone_ct(self, data):
         route = '/nodes/%s/lxc/%s/clone' % (data['node'], data['vmid'])
 

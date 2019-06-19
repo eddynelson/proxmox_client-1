@@ -315,6 +315,20 @@ class ProxmoxClient():
 
         return MSG
 
+    def rollback_snapshot(self, data):
+        route = '/nodes/%s/lxc/%s/snapshot/%s/rollback' % (data['node'], data['vmid'], data['snapname'])
+
+        res = requests.post(
+          self.api_url + route,
+          verify=False,
+          cookies=self._cookies,
+          headers={ "CSRFPreventionToken": self._token }
+        )
+        
+        res.raise_for_status()
+
+        return MSG
+
     def create_template(self, data):
         route = '/nodes/%s/lxc/%s/template' % (data['node'], data['vmid'])
 

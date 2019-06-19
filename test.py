@@ -3,7 +3,7 @@ import unittest
 from main import ProxmoxClient
 
 CONFIG = {
-  "base_url": "142.44.137.49",
+  "base_url": "192.168.1.21",
   "verify_ssl": False,
   "password": "010203",
   "username": "root@pam"
@@ -23,7 +23,7 @@ class ProxmoxClientTest(unittest.TestCase):
         self.type_list = type([])
         self.type_dict = type({})
         self.success_result = { "message": 'Success!!' }
-        self.node = "ursa"
+        self.node = "eddy"
 
         #nodes
         self.vm_for_clonning = 100
@@ -119,6 +119,14 @@ class ProxmoxClientTest(unittest.TestCase):
             'vmid': self.vm_for_other, 
             "snapname": "any", 
             "description": "other" 
+        })
+        self.assertEqual(result, self.success_result)
+
+    def test_rollback_snapshot(self):
+        result = self.client.rollback_snapshot(data={
+            "node": self.node, 
+            'vmid': self.vm_for_other, 
+            "snapname": "any" 
         })
         self.assertEqual(result, self.success_result)
 

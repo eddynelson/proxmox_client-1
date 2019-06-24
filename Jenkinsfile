@@ -6,8 +6,10 @@ pipeline{
     }
     stages{
         stage('build'){
-            echo "building..."
-            sh "pip3 install requests"
+            steps{
+                echo "building..."
+                sh "pip3 install requests"
+            }
         }
         stage("Unit Test"){
             steps{
